@@ -1,0 +1,12 @@
+{
+  "name": "@repo/tailwind-config",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./tailwind.css"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "tailwindcss": "^4.0.1"
+  }
+}
