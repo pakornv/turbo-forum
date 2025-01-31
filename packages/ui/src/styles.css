@@ -95,8 +95,10 @@
     --input: var(--color-zinc-300);
     /* --ring: var(--color-blue-600); */
     --ring: #49a569;
-    --navbar: var(--color-zinc-50);
-    --navbar-fg: var(--color-zinc-950);
+    /* --navbar: var(--color-zinc-50); */
+    --navbar: #243831;
+    /* --navbar-fg: var(--color-zinc-950); */
+    --navbar-fg: #ffffff;
 
     --sidebar: var(--color-zinc-50);
     --sidebar-fg: var(--color-zinc-950);

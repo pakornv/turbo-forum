@@ -12,7 +12,7 @@ import { focusButtonStyles } from "./primitive";
 const buttonStyles = tv({
   extend: focusButtonStyles,
   base: [
-    "kbt32x relative inline-flex min-w-[105px] items-center justify-center gap-x-2 border font-semibold",
+    "kbt32x relative inline-flex items-center justify-center gap-x-2 border font-ibm-plex-sans-thai font-semibold",
     "forced-colors:[--btn-icon:ButtonText] forced-colors:data-hovered:[--btn-icon:ButtonText]",
     "*:data-[slot=icon]:-mx-0.5 *:data-[slot=icon]:my-1 *:data-[slot=icon]:size-4 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:text-current/60 *:data-[slot=icon]:transition data-hovered:*:data-[slot=icon]:text-current/90 data-pressed:*:data-[slot=icon]:text-current",
     "*:data-[slot=avatar]:-mx-0.5 *:data-[slot=avatar]:my-1 *:data-[slot=avatar]:*:size-4 *:data-[slot=avatar]:size-4 *:data-[slot=avatar]:shrink-0",
@@ -54,17 +54,18 @@ const buttonStyles = tv({
       ],
       outline: ["border data-hovered:bg-secondary data-pressed:bg-secondary"],
       plain: [
-        "border-transparent data-hovered:bg-secondary data-pressed:bg-secondary",
+        "border-transparent",
+        // "data-hovered:bg-secondary data-pressed:bg-secondary",
       ],
     },
     size: {
       "extra-small":
         "h-8 px-[calc(var(--spacing)*2.7)] text-xs/4 lg:text-[0.800rem]/4",
       small: "h-9 px-3.5 text-sm/5 sm:text-sm/5",
-      medium: "h-10 px-4 text-base sm:text-sm/6",
+      medium: "h-10 min-w-[105px] px-4 text-base sm:text-sm/6",
       large:
         "h-11 px-4.5 text-base *:data-[slot=icon]:mx-[-1.5px] sm:*:data-[slot=icon]:size-5 lg:text-base/7",
-      "square-petite": "size-9 shrink-0",
+      "square-petite": "size-10 shrink-0",
     },
     shape: {
       square: "rounded-lg",

@@ -180,18 +180,17 @@ const LOADERS = {
 
 const DEFAULT_SPINNER = "spin";
 
-interface LoaderProps
-  extends Omit<
-      React.ComponentPropsWithoutRef<"svg">,
-      "display" | "opacity" | "intent"
-    >,
-    LoaderVariantProps {
-  variant?: keyof typeof LOADERS;
-  percentage?: number;
-  isIndeterminate?: boolean;
-  formatOptions?: Intl.NumberFormatOptions;
-  ref?: React.RefObject<SVGSVGElement>;
-}
+type LoaderProps = Omit<
+  React.ComponentPropsWithoutRef<"svg">,
+  "display" | "opacity" | "intent"
+> &
+  LoaderVariantProps & {
+    variant?: keyof typeof LOADERS;
+    percentage?: number;
+    isIndeterminate?: boolean;
+    formatOptions?: Intl.NumberFormatOptions;
+    ref?: React.RefObject<SVGSVGElement>;
+  };
 
 const Loader = ({ isIndeterminate = true, ref, ...props }: LoaderProps) => {
   const {
