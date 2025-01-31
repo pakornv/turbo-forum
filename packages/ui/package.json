@@ -6,8 +6,9 @@
   "exports": {
     "./styles.css": "./src/styles.css",
     "./button": "./src/button.tsx",
-    "./text-field": "./src/text-field.tsx",
-    "./progress-circle": "./src/progress-circle.tsx"
+    "./link": "./src/link.tsx",
+    "./progress-circle": "./src/progress-circle.tsx",
+    "./text-field": "./src/text-field.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
