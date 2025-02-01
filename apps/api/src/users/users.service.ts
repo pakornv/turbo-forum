@@ -1,24 +1,26 @@
 import { Injectable } from "@nestjs/common";
-
-export type User = {
-  id: string;
-  username: string;
-};
+import { User } from "./entities/user.entity";
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
+  private readonly users: User[] = [
     {
-      id: "ANjCOp-eOdvxzylpPHeNg",
+      // id: "sPNbRQDyrUst0w-jFu08I",
+      name: "John Doe",
+      email: "johndoe@example.com",
       username: "john",
+      picture: "http://example.com/johndoe/me.jpg",
     },
     {
-      id: "sPNbRQDyrUst0w-jFu08I",
-      username: "maria",
+      // id: "ANjCOp-eOdvxzylpPHeNg",
+      username: "jane",
+      name: "Jane Doe",
+      email: "janedoe@example.com",
+      picture: "http://example.com/janedoe/me.jpg",
     },
   ];
 
-  async findOne(username: string): Promise<User | undefined> {
+  findOne(username: string) {
     return this.users.find((user) => user.username === username);
   }
 }

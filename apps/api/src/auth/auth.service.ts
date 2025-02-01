@@ -18,12 +18,12 @@ export class AuthService {
     }
 
     return {
-      access_token: await this.jwtService.signAsync({ sub: user.id }),
+      access_token: await this.jwtService.signAsync({ sub: user.username }),
       id_token: await this.jwtService.signAsync({
-        sub: user.id,
-        name: "Jane Doe",
-        email: "janedoe@example.com",
-        picture: "http://example.com/janedoe/me.jpg",
+        sub: user.username,
+        name: user.name,
+        email: user.email,
+        picture: user.picture,
       }),
     };
   }
