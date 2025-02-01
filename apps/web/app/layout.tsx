@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${ibmPlexSansThai.variable} ${castoro.variable} h-full`}
+        className={`${inter.variable} ${ibmPlexSansThai.variable} ${castoro.variable} flex h-full flex-col`}
       >
         <Providers>{children}</Providers>
       </body>

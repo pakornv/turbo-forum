@@ -1,14 +1,12 @@
-"use client";
-
-import { Button } from "@repo/ui/button";
-import { ProgressCircle } from "@repo/ui/progress-circle";
-import { TextField } from "@repo/ui/text-field";
-import { useAction } from "next-safe-action/hooks";
+import { auth } from "@/lib/auth";
 import Image from "next/image";
-import { signInAction } from "./actions";
+import { redirect } from "next/navigation";
+import { SignInForm } from "./form";
 
-export default function Page() {
-  const { execute, isPending } = useAction(signInAction);
+export default async function Page() {
+  const session = await auth();
+
+  if (session?.user) redirect("/posts");
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-ui-green-500 lg:flex-row-reverse">
@@ -32,26 +30,7 @@ export default function Page() {
             Sign in
           </h2>
           <div className="mt-10">
-            <form
-              action={async (formData: FormData) => {
-                execute({ username: formData.get("username") as string });
-              }}
-            >
-              <TextField
-                name="username"
-                placeholder="Username"
-                aria-label="Username"
-                className="text-white"
-                isRequired
-              />
-              <div className="mt-5">
-                <Button type="submit" className="w-full" isPending={isPending}>
-                  {({ isPending }) =>
-                    isPending ? <ProgressCircle isIndeterminate /> : "Sign In"
-                  }
-                </Button>
-              </div>
-            </form>
+            <SignInForm />
           </div>
         </div>
       </div>

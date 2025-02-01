@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, ButtonPrimitive } from "@repo/ui/button";
+import { Avatar } from "@/components/avatar";
+import { ButtonPrimitive, buttonStyles } from "@repo/ui/button";
 import { Link } from "@repo/ui/link";
 import {
   Navbar,
@@ -18,9 +19,13 @@ type AppNavbarProps = {
     href: string;
     icon: React.ElementType;
   }[];
+  user?: {
+    name: string;
+    image: string;
+  };
 };
 
-export function AppNavbar({ items }: AppNavbarProps) {
+export function AppNavbar({ user, items }: AppNavbarProps) {
   const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -38,43 +43,19 @@ export function AppNavbar({ items }: AppNavbarProps) {
         </Link>
 
         <div className="ml-auto hidden md:flex">
-          <Button>Sign In</Button>
+          {user ? (
+            <div>
+              <span className="mr-5 font-medium text-white">{user.name}</span>
+              <Avatar src={user.image} alt={user.name} size="large" />
+            </div>
+          ) : (
+            <Link href="sign-in" className={buttonStyles}>
+              Sign In
+            </Link>
+          )}
         </div>
 
         <div className="md:hidden">
-          {/* <div className="px-4">
-            {[
-              { name: "Home", href: "/posts" },
-              { name: "Our Blog", href: "/me" },
-            ].map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center px-3 py-2 font-extrabold text-ui-green-100"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div> */}
-
-          {/* <div className="mt-8 ml-6 py-1.5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="19"
-              height="15"
-              viewBox="0 0 19 15"
-              fill="none"
-              // className="h-3 w-4"
-            >
-              <path
-                d="M1.10645 7.48804L17.1064 7.48804M17.1064 7.48804L11.1064 1.48804M17.1064 7.48804L11.1064 13.488"
-                stroke="#D8E9E4"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div> */}
           <CloseButton />
 
           <ul className="mt-9 flex flex-col gap-y-1 px-2">
