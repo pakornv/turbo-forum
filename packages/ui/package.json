@@ -5,6 +5,7 @@
   "private": true,
   "exports": {
     "./styles.css": "./src/styles.css",
+    "./badge": "./src/badge.tsx",
     "./button": "./src/button.tsx",
     "./link": "./src/link.tsx",
     "./navbar": "./src/navbar.tsx",

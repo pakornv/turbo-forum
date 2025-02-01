@@ -26,8 +26,10 @@
   --color-primary: #49a569;
   --color-primary-fg: var(--primary-fg);
 
-  --color-secondary: var(--secondary);
-  --color-secondary-fg: var(--secondary-fg);
+  /* --color-secondary: var(--secondary); */
+  --color-secondary: #f3f3f3;
+  /* --color-secondary-fg: var(--secondary-fg); */
+  --color-secondary-fg: #4a4a4a;
 
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
