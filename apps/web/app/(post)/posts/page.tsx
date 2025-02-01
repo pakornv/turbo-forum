@@ -1,9 +1,5 @@
-import { auth } from "@/lib/auth";
+import { PostList } from "../post-list";
 
-async function PostList() {
-  const session = await auth();
-
-  return <div>{JSON.stringify(session)}</div>;
+export default function Page() {
+  return <PostList />;
 }
-
-export default PostList;

@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@repo/ui": "*",
+    "@tanstack/react-query": "^5.66.0",
+    "@tanstack/react-query-devtools": "^5.66.0",
     "jwt-decode": "^4.0.0",
     "next": "^15.1.6",
     "next-auth": "^5.0.0-beta.25",

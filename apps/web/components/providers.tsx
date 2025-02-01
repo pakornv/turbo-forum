@@ -1,7 +1,11 @@
 "use client";
 
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useRouter } from "next/navigation";
 import { RouterProvider } from "react-aria-components";
+
+import { getQueryClient } from "@/lib/query-client";
 import { ThemeProvider } from "./theme-provider";
 
 declare module "react-aria-components" {
@@ -15,11 +19,16 @@ declare module "react-aria-components" {
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
+  const queryClient = getQueryClient();
+
   return (
     <RouterProvider navigate={router.push}>
-      <ThemeProvider enableSystem attribute="class">
-        {children}
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider enableSystem attribute="class">
+          {children}
+          <ReactQueryDevtools />
+        </ThemeProvider>
+      </QueryClientProvider>
     </RouterProvider>
   );
 }
