@@ -8,8 +8,10 @@
     "./badge": "./src/badge.tsx",
     "./button": "./src/button.tsx",
     "./link": "./src/link.tsx",
+    "./modal": "./src/modal.tsx",
     "./navbar": "./src/navbar.tsx",
     "./progress-circle": "./src/progress-circle.tsx",
+    "./text-area": "./src/text-area.tsx",
     "./text-field": "./src/text-field.tsx",
     "./utils": "./src/utils/index.ts"
   },

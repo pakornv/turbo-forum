@@ -21,16 +21,16 @@ const dialogStyles = tv({
       "peer/dialog group/dialog relative flex max-h-[inherit] flex-col overflow-hidden outline-hidden [scrollbar-width:thin] [&::-webkit-scrollbar]:size-0.5",
     ],
     header:
-      "relative flex flex-col gap-0.5 p-4 sm:gap-1 sm:p-6 [&[data-slot=dialog-header]:has(+[data-slot=dialog-footer])]:pb-0",
+      "relative flex flex-col gap-0.5 px-4 py-7.5 sm:gap-1 sm:p-7.5 [&[data-slot=dialog-header]:has(+[data-slot=dialog-footer])]:pb-0",
     description: "text-sm text-muted-fg",
     body: [
-      "isolate flex flex-1 flex-col overflow-auto px-4 sm:px-6",
+      "isolate flex flex-1 flex-col overflow-auto px-4 sm:px-7.5",
       "max-h-[calc(var(--visual-viewport-height)-var(--visual-viewport-vertical-padding)-var(--dialog-header-height,0px)-var(--dialog-footer-height,0px))]",
     ],
     footer:
-      "isolate mt-auto flex flex-col-reverse justify-between gap-3 p-4 sm:flex-row sm:p-6",
+      "isolate mt-auto flex flex-col-reverse justify-end gap-3 px-4 py-7.5 sm:flex-row sm:p-7.5 sm:pt-2.5",
     closeIndicator:
-      "close absolute top-1 right-1 z-50 grid size-8 place-content-center rounded-xl data-focus-visible:ring-1 data-focus-visible:ring-primary data-focused:bg-secondary data-focused:outline-hidden data-hovered:bg-secondary sm:top-2 sm:right-2 sm:size-7 sm:rounded-md",
+      "close absolute top-2 right-2 z-50 grid size-8 place-content-center rounded-xl data-focus-visible:ring-1 data-focus-visible:ring-primary data-focused:bg-secondary data-focused:outline-hidden data-hovered:bg-secondary sm:top-4 sm:right-4 sm:size-8 sm:rounded-md",
   },
 });
 
@@ -47,7 +47,7 @@ const Dialog = ({
   );
 };
 
-const Trigger = (props: React.ComponentProps<typeof ButtonPrimitive>) => (
+const DialogTrigger = (props: React.ComponentProps<typeof ButtonPrimitive>) => (
   <ButtonPrimitive {...props} />
 );
 
@@ -56,7 +56,7 @@ type DialogHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
   description?: string;
 };
 
-const Header = ({ className, ...props }: DialogHeaderProps) => {
+const DialogHeader = ({ className, ...props }: DialogHeaderProps) => {
   const headerRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -84,10 +84,12 @@ const Header = ({ className, ...props }: DialogHeaderProps) => {
       ref={headerRef}
       className={header({ className })}
     >
-      {props.title && <Title>{props.title}</Title>}
-      {props.description && <Description>{props.description}</Description>}
+      {props.title && <DialogTitle>{props.title}</DialogTitle>}
+      {props.description && (
+        <DialogDescription>{props.description}</DialogDescription>
+      )}
       {!props.title && typeof props.children === "string" ? (
-        <Title {...props} />
+        <DialogTitle {...props} />
       ) : (
         props.children
       )}
@@ -99,7 +101,7 @@ const titleStyles = tv({
   base: "flex flex-1 items-center text-fg",
   variants: {
     level: {
-      1: "text-lg font-semibold sm:text-xl",
+      1: "text-2xl font-semibold sm:text-[28px]",
       2: "text-lg font-semibold sm:text-xl",
       3: "text-base font-semibold sm:text-lg",
       4: "text-base font-semibold",
@@ -111,7 +113,13 @@ type DialogTitleProps = Omit<HeadingProps, "level"> & {
   level?: 1 | 2 | 3 | 4;
   ref?: React.Ref<HTMLHeadingElement>;
 };
-const Title = ({ level = 2, className, ref, ...props }: DialogTitleProps) => (
+
+const DialogTitle = ({
+  level = 2,
+  className,
+  ref,
+  ...props
+}: DialogTitleProps) => (
   <Heading
     slot="title"
     level={level}
@@ -122,7 +130,12 @@ const Title = ({ level = 2, className, ref, ...props }: DialogTitleProps) => (
 );
 
 type DialogDescriptionProps = React.ComponentProps<"div">;
-const Description = ({ className, ref, ...props }: DialogDescriptionProps) => (
+
+const DialogDescription = ({
+  className,
+  ref,
+  ...props
+}: DialogDescriptionProps) => (
   <Text
     slot="description"
     className={description({ className })}
@@ -144,7 +157,7 @@ const DialogBody = ({ className, ref, ...props }: DialogBodyProps) => (
 
 type DialogFooterProps = React.ComponentProps<"div">;
 
-const Footer = ({ className, ...props }: DialogFooterProps) => {
+const DialogFooter = ({ className, ...props }: DialogFooterProps) => {
   const footerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -178,7 +191,7 @@ const Footer = ({ className, ...props }: DialogFooterProps) => {
   );
 };
 
-const Close = ({
+const DialogClose = ({
   className,
   variant = "outline",
   ref,
@@ -220,12 +233,21 @@ const DialogCloseIndicator = ({
       slot="close"
       className={closeIndicator({ className })}
     >
-      <IconX className="size-4" />
+      <IconX className="size-6 text-ui-green-500" />
     </ButtonPrimitive>
   ) : null;
 };
 
-export { Dialog, DialogBody, DialogCloseIndicator };
+export {
+  Dialog,
+  DialogBody,
+  DialogClose,
+  DialogCloseIndicator,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+};
 export type {
   CloseButtonIndicatorProps,
   DialogBodyProps,

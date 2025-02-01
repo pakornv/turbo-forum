@@ -52,7 +52,9 @@ const buttonStyles = tv({
         "data-hovered:bg-(--btn-bg-hovered) data-hovered:ring-(--btn-border-hovered)",
         "data-pressed:border-(--btn-border) data-pressed:bg-(--btn-bg)",
       ],
-      outline: ["border data-hovered:bg-secondary data-pressed:bg-secondary"],
+      outline: [
+        "border-(--btn-border) text-(--btn-border) data-hovered:bg-secondary data-pressed:bg-secondary",
+      ],
       plain: [
         "border-transparent",
         // "data-hovered:bg-secondary data-pressed:bg-secondary",
