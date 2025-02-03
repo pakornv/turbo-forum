@@ -10,11 +10,7 @@ export function SignInForm() {
   const { execute, isPending } = useAction(signIn);
 
   return (
-    <form
-      action={async (formData: FormData) => {
-        execute({ username: formData.get("username") as string });
-      }}
-    >
+    <form action={execute}>
       <TextField
         name="username"
         placeholder="Username"

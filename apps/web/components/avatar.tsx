@@ -22,13 +22,13 @@ const avatar = tv({
   },
 });
 
-interface AvatarProps extends VariantProps<typeof avatar> {
+type AvatarProps = VariantProps<typeof avatar> & {
   src?: string | null;
   initials?: string;
   alt?: string;
   className?: string;
   fallback?: string;
-}
+};
 
 const Avatar = ({
   src = null,
@@ -72,11 +72,11 @@ const Avatar = ({
         </svg>
       )}
 
-      {src && (
+      {src !== null && (
         <Image
           width={100}
           height={100}
-          src={error ? fallback : src}
+          src={error ? fallback : src || fallback}
           alt={alt}
           onError={() => setError(true)}
         />

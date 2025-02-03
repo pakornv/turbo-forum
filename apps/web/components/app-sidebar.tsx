@@ -16,8 +16,8 @@ function AppSidebar({ items }: AppSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <nav className="w-full overflow-y-auto px-4 py-8">
-      <ul className="flex flex-col gap-y-1">
+    <nav className="hidden w-full overflow-y-auto px-4 py-8 sm:fixed sm:flex sm:w-70 sm:flex-shrink-0 sm:flex-col">
+      <ul className="flex flex-col gap-y-1 pt-18 sm:pt-15">
         {items.map((item) => (
           <li key={item.href}>
             <Link

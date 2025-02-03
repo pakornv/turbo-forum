@@ -2,29 +2,7 @@ import type { JwtPayload } from "jwt-decode";
 import { jwtDecode } from "jwt-decode";
 import type { NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
-import type { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
-
-declare module "next-auth" {
-  interface User {
-    accessToken: string;
-  }
-
-  interface Session {
-    user: User & {
-      name: string;
-      image: string;
-      email: string;
-      accessToken: string;
-    };
-  }
-}
-
-declare module "next-auth/jwt" {
-  interface JWT {
-    accessToken: string;
-  }
-}
 
 const config: NextAuthConfig = {
   providers: [
@@ -33,7 +11,7 @@ const config: NextAuthConfig = {
         username: {},
       },
       async authorize(credentials) {
-        const res = await fetch("http://localhost:3001/auth/login", {
+        const res = await fetch(`${process.env.API_BASE_URL}/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -46,17 +24,17 @@ const config: NextAuthConfig = {
         const data = await res.json();
         const decoded = jwtDecode<
           JwtPayload & {
+            sub: string;
             name: string;
-            email: string;
             picture: string;
           }
-        >(data.id_token);
+        >(data.idToken);
 
         return {
+          id: decoded.sub,
           name: decoded.name,
-          email: decoded.email,
           image: decoded.picture,
-          accessToken: data.access_token,
+          accessToken: data.accessToken,
         };
       },
     }),
@@ -64,11 +42,13 @@ const config: NextAuthConfig = {
   callbacks: {
     jwt({ token, user }) {
       if (user) {
+        token.id = user.id as string;
         token.accessToken = user.accessToken;
       }
       return token;
     },
     session({ session, token }) {
+      session.user.id = token.id;
       session.user.accessToken = token.accessToken;
       return session;
     },
@@ -76,4 +56,4 @@ const config: NextAuthConfig = {
 };
 
 export const { handlers, signIn: _signIn, signOut, auth } = NextAuth(config);
-export { signIn } from "./sign-in";
+export { signIn } from "./actions";

@@ -5,7 +5,7 @@ import { EditIcon, HomeIcon } from "./icons";
 
 const items = [
   { name: "Home", href: "/posts", icon: HomeIcon },
-  { name: "Our Blog", href: "/me/posts", icon: EditIcon },
+  { name: "Our Blog", href: "/my-posts", icon: EditIcon },
 ];
 
 export default async function Layout({
@@ -16,12 +16,10 @@ export default async function Layout({
   return (
     <>
       <AppNavbar user={session?.user} items={items} />
-      <div className="flex flex-1 bg-ui-grey-100">
-        <div className="hidden lg:fixed lg:flex lg:w-70 lg:flex-shrink-0 lg:flex-col">
-          <AppSidebar items={items} />
-        </div>
-        <main className="flex flex-1 flex-col lg:ml-70">{children}</main>
-      </div>
+      {/* <div className="flex flex-1 bg-ui-grey-100"> */}
+      <AppSidebar items={items} />
+      <main className="flex flex-1 flex-col sm:pl-70">{children}</main>
+      {/* </div> */}
     </>
   );
 }

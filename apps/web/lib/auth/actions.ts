@@ -2,18 +2,16 @@
 
 import { actionClient } from "@/lib/safe-action";
 import { z } from "zod";
+import { zfd } from "zod-form-data";
 import { _signIn } from ".";
 
-const schema = z.object({
-  username: z.string().min(3).max(10),
+const schema = zfd.formData({
+  username: zfd.text(z.string().min(2)),
 });
 
 export const signIn = actionClient
   .schema(schema)
   .action(async ({ parsedInput: { username } }) => {
     await _signIn("credentials", { username, redirectTo: "/posts" });
-
-    return {
-      success: "Successfully logged in",
-    };
+    return;
   });
