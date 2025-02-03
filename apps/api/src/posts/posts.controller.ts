@@ -30,7 +30,7 @@ export class PostsController {
   @Get(":id")
   async finOne(@Param("id") id: string) {
     try {
-      return await this.postsService.findOne(id);
+      return await this.postsService.findOneLatest(id);
     } catch (error) {
       if (error instanceof NotFoundError) throw new NotFoundException();
       throw error;

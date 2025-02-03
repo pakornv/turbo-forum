@@ -91,6 +91,34 @@ export class PostsService {
       commentCount: 0,
     }));
   }
+
+  async findOneLatest(id: string): Promise<LatestPostDto> {
+    const result = await this.db.query.posts.findFirst({
+      with: { author: true, community: true },
+      where: eq(posts.id, id),
+    });
+
+    if (!result) {
+      throw new NotFoundError();
+    }
+
+    return {
+      id: result.id,
+      title: result.title,
+      body: result.body,
+      author: {
+        id: result.author.id,
+        name: result.author.name,
+        picture: result.author.picture,
+      },
+      community: {
+        id: result.community.id,
+        name: result.community.name,
+      },
+      createdAt: result.createdAt,
+      commentCount: 0,
+    };
+  }
 }
 
 export class NotFoundError extends Error {
