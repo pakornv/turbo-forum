@@ -22,7 +22,7 @@ export type Post = {
   };
 };
 
-export async function listPosts(filters?: string | ListPostsFilters) {
+export async function listPosts(filters?: ListPostsFilters) {
   const baseUrl = process.env.API_BASE_URL ?? "/api";
 
   const res = await fetch(
@@ -33,16 +33,33 @@ export async function listPosts(filters?: string | ListPostsFilters) {
   return res.json() as Promise<Post[]>;
 }
 
+export async function getPost(postId: string) {
+  const baseUrl = process.env.API_BASE_URL ?? "/api";
+
+  const res = await fetch(`${baseUrl}/posts/${postId}`);
+  if (!res.ok) throw new Error("Failed to fetch post");
+
+  return res.json() as Promise<Post>;
+}
+
 export const postQueries = {
   all: ["posts"],
   list: (filters?: ListPostsFilters) =>
     queryOptions({
       queryKey: [...postQueries.all, filters],
-      queryFn: async ({ queryKey }) => {
-        const [, filters] = queryKey;
+      queryFn: async () => {
         const data = await listPosts(filters);
         return data;
       },
+    }),
+  detail: (postId: string) =>
+    queryOptions({
+      queryKey: [...postQueries.all, postId],
+      queryFn: async () => {
+        const post = await getPost(postId);
+        return post;
+      },
+      enabled: !!postId,
     }),
 };
 

@@ -113,7 +113,7 @@ const SelectTrigger = ({ className, ...props }: SelectTriggerProps) => {
       )}
     >
       {props.prefix && <span className="-mr-1">{props.prefix}</span>}
-      <SelectValue className="grid flex-1 grid-cols-[auto_1fr] items-center text-left text-base data-placeholder:font-semibold data-placeholder:text-primary *:data-[slot=avatar]:*:-mx-0.5 *:data-[slot=avatar]:-mx-0.5 *:data-[slot=avatar]:*:mr-2 *:data-[slot=avatar]:mr-2 *:data-[slot=icon]:-mx-0.5 *:data-[slot=icon]:mr-2 sm:text-sm [&_[slot=description]]:hidden" />
+      <SelectValue className="grid grid-cols-[auto_1fr] items-center text-left text-base data-placeholder:font-semibold data-placeholder:text-primary *:data-[slot=avatar]:*:-mx-0.5 *:data-[slot=avatar]:-mx-0.5 *:data-[slot=avatar]:*:mr-2 *:data-[slot=avatar]:mr-2 *:data-[slot=icon]:-mx-0.5 *:data-[slot=icon]:mr-2 sm:text-sm [&_[slot=description]]:hidden" />
       <svg
         aria-hidden
         xmlns="http://www.w3.org/2000/svg"

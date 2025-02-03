@@ -46,7 +46,7 @@ const Toast = ({ ...props }: ToasterProps) => {
           content:
             "pr-6 *:data-description:text-current/65! *:data-description:text-sm!",
           error:
-            "inset-ring-danger/15 dark:inset-ring-danger/25 [--error-bg:theme(--color-danger/10%)] [--error-border:transparent] [--error-text:var(--color-danger)]",
+            "inset-ring-danger/15 dark:inset-ring-danger/25 [--error-bg:theme(--color-danger/80%)] [--error-border:transparent] [--error-text:#fff]",
           info: "inset-ring-sky-600/15 dark:inset-ring-sky-500/20 [--info-border:transparent] [--info-bg:theme(--color-sky-500/10%)] [--info-text:var(--color-sky-700)] dark:[--info-bg:theme(--color-sky-500/15%)] dark:[--info-text:var(--color-sky-400)]",
           warning:
             "inset-ring-warning/30 dark:inset-ring-warning/15 [--warning-bg:theme(--color-warning/20%)] dark:[--warning-bg:theme(--color-warning/10%)] [--warning-border:transparent] [--warning-text:var(--color-warning-fg)] dark:[--warning-text:var(--color-warning)]",

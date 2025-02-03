@@ -22,8 +22,7 @@
   --color-bg: var(--bg);
   --color-fg: var(--fg);
 
-  /* --color-primary: var(--primary); */
-  --color-primary: #49a569;
+  --color-primary: var(--primary);
   --color-primary-fg: var(--primary-fg);
 
   /* --color-secondary: var(--secondary); */
@@ -68,7 +67,8 @@
     /* --fg: var(--color-zinc-950); */
     --fg: #1c1c1c;
 
-    --primary: var(--color-blue-600);
+    /* --primary: var(--color-blue-600); */
+    --primary: #49a569;
     --primary-fg: var(--color-white);
 
     --secondary: var(--color-zinc-100);
@@ -79,7 +79,8 @@
 
     /* --accent: var(--color-blue-600); */
     --accent: #d8e9e4;
-    --accent-fg: var(--color-white);
+    /* --accent-fg: var(--color-white); */
+    --accent-fg: #1c1c1c;
 
     --muted: var(--color-zinc-100);
     /* --muted-fg: var(--color-zinc-600); */
@@ -91,7 +92,8 @@
     --warning: var(--color-amber-400);
     --warning-fg: var(--color-amber-950);
 
-    --danger: var(--color-red-600);
+    /* --danger: var(--color-red-600); */
+    --danger: #f23536;
     --danger-fg: var(--color-red-50);
 
     /* --border: var(--color-zinc-200);  */

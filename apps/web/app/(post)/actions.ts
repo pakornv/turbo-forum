@@ -7,17 +7,16 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
 
-const schema = zfd.formData({
+const createPostSchema = zfd.formData({
   title: zfd.text(z.string().min(2)),
   body: zfd.text(z.string().min(2)),
   communityId: zfd.text(z.string()),
 });
 
 export const createPost = actionClient
-  .schema(schema)
+  .schema(createPostSchema)
   .action(async ({ parsedInput }) => {
     const session = await auth();
-
     if (!session?.user.accessToken) redirect("/sign-in");
 
     const res = await fetch(`${process.env.API_BASE_URL}/posts`, {
@@ -29,7 +28,51 @@ export const createPost = actionClient
       body: JSON.stringify(parsedInput),
     });
 
-    if (!res.ok) throw new Error("Failed to create post");
+    if (!res.ok) {
+      console.error(await res.text());
+      throw new Error("Failed to create post");
+    }
 
     revalidatePath("/(post)", "layout");
   });
+
+export const updatePost = actionClient
+  .schema(createPostSchema)
+  .bindArgsSchemas<[id: z.ZodString]>([z.string()])
+  .action(async ({ parsedInput, bindArgsParsedInputs: [id] }) => {
+    const session = await auth();
+    if (!session?.user.accessToken) redirect("/sign-in");
+
+    const res = await fetch(`${process.env.API_BASE_URL}/posts/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session?.user.accessToken}`,
+      },
+      body: JSON.stringify(parsedInput),
+    });
+
+    if (!res.ok) {
+      console.error(await res.text());
+      throw new Error("Failed to update post");
+    }
+
+    revalidatePath("/(post)", "layout");
+  });
+
+export async function deletePost(id: string) {
+  const session = await auth();
+  if (!session?.user.accessToken) redirect("/sign-in");
+
+  const res = await fetch(`${process.env.API_BASE_URL}/posts/${id}`, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${session?.user.accessToken}` },
+  });
+
+  if (!res.ok) {
+    console.error(await res.text());
+    throw new Error("Failed to delete post");
+  }
+
+  revalidatePath("/(post)", "layout");
+}

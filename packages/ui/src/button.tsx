@@ -15,19 +15,19 @@ const buttonStyles = tv({
     "kbt32x relative inline-flex items-center justify-center gap-x-2 border font-ibm-plex-sans-thai font-semibold",
     "forced-colors:[--btn-icon:ButtonText] forced-colors:data-hovered:[--btn-icon:ButtonText]",
     // "*:data-[slot=icon]:-mx-0.5 *:data-[slot=icon]:my-1 *:data-[slot=icon]:size-4 *:data-[slot=icon]:shrink-0 *:data-[slot=icon]:text-current/60 *:data-[slot=icon]:transition data-hovered:*:data-[slot=icon]:text-current/90 data-pressed:*:data-[slot=icon]:text-current",
-    "*:data-[slot=avatar]:-mx-0.5 *:data-[slot=avatar]:my-1 *:data-[slot=avatar]:*:size-4 *:data-[slot=avatar]:size-4 *:data-[slot=avatar]:shrink-0",
+    // "*:data-[slot=avatar]:-mx-0.5 *:data-[slot=avatar]:my-1 *:data-[slot=avatar]:*:size-4 *:data-[slot=avatar]:size-4 *:data-[slot=avatar]:shrink-0",
   ],
   variants: {
     color: {
       primary: [
-        "outline-primary [--btn-bg:theme(--color-primary/95%)] [--btn-border:var(--color-primary)] [--btn-fg:var(--color-primary-fg)] dark:[--btn-bg:theme(--color-primary/90%)]",
+        "outline-primary [--btn-bg:var(--color-primary)] [--btn-border:var(--color-primary)] [--btn-fg:var(--color-primary-fg)] dark:[--btn-bg:var(--color-primary)]",
         "[--btn-bg-hovered:theme(--color-primary/87%)] [--btn-border-hovered:theme(--color-primary/87%)] dark:[--btn-bg-hovered:theme(--color-primary)] dark:[--btn-border-hovered:theme(--color-primary)]",
-        "inset-shadow-primary-fg/20 data-hovered:inset-shadow-primary-fg/25 data-pressed:inset-shadow-primary-fg/20",
+        // "inset-shadow-primary-fg/20 data-hovered:inset-shadow-primary-fg/25 data-pressed:inset-shadow-primary-fg/20",
       ],
       secondary: [
-        "[--btn-bg:theme(--color-secondary/95%)] [--btn-border:theme(--color-secondary-fg/10%)] [--btn-fg:var(--color-secondary-fg)] dark:[--btn-bg:theme(--color-secondary/85%)] dark:[--btn-border:theme(--color-secondary-fg/7%)]",
+        "[--btn-bg:#5B5B5B] [--btn-border:var(--color-border)] [--btn-fg:var(--color-secondary-fg)] dark:[--btn-bg:var(--color-secondary)] dark:[--btn-border:var(--color-secondary-fg)]",
         "[--btn-bg-hovered:color-mix(in_oklab,var(--color-secondary)_60%,white_20%)] dark:[--btn-bg-hovered:color-mix(in_oklab,var(--color-secondary)_96%,white_4%)]",
-        "inset-shadow-white/15 data-hovered:inset-shadow-white/20 data-pressed:inset-shadow-white/15",
+        // "inset-shadow-white/15 data-hovered:inset-shadow-white/20 data-pressed:inset-shadow-white/15",
       ],
       warning: [
         "[--btn-warning:theme(--color-warning/97%)]",
@@ -53,11 +53,11 @@ const buttonStyles = tv({
         "data-pressed:border-(--btn-border) data-pressed:bg-(--btn-bg)",
       ],
       outline: [
-        "border-(--btn-border) text-(--btn-border) data-hovered:bg-secondary data-pressed:bg-secondary",
+        "border-(--btn-border) text-(--btn-bg) data-hovered:bg-secondary data-pressed:bg-secondary",
       ],
       plain: [
         "border-transparent",
-        // "data-hovered:bg-secondary data-pressed:bg-secondary",
+        "data-hovered:bg-secondary data-pressed:bg-secondary",
       ],
     },
     size: {
