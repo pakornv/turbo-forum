@@ -11,15 +11,15 @@ export class AuthService {
 
   async signIn(
     username: string,
-  ): Promise<{ access_token: string; id_token: string }> {
-    const user = await this.usersService.findOne(username);
+  ): Promise<{ accessToken: string; idToken: string }> {
+    const user = await this.usersService.findOneByUsername(username);
     if (!user) {
       throw new UnauthorizedException();
     }
 
     return {
-      access_token: await this.jwtService.signAsync({ sub: user.id }),
-      id_token: await this.jwtService.signAsync({
+      accessToken: await this.jwtService.signAsync({ sub: user.id }),
+      idToken: await this.jwtService.signAsync({
         sub: user.id,
         name: user.name,
         picture: user.picture,

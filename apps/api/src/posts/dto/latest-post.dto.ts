@@ -1,4 +1,4 @@
-export class LatestPost {
+export class LatestPostDto {
   id: string;
   title: string;
   body: string;
@@ -13,13 +13,4 @@ export class LatestPost {
     name: string;
     picture: string;
   };
-  // comments: {
-  //   id: string;
-  //   body: string;
-  //   createdAt: string;
-  //   creator: {
-  //     name: string;
-  //     image?: string;
-  //   };
-  // }[];
 }
