@@ -5,15 +5,18 @@
   "private": true,
   "exports": {
     "./styles.css": "./src/styles.css",
+    "./utils": "./src/utils/index.ts",
     "./badge": "./src/badge.tsx",
     "./button": "./src/button.tsx",
+    "./form": "./src/form.tsx",
     "./link": "./src/link.tsx",
     "./modal": "./src/modal.tsx",
     "./navbar": "./src/navbar.tsx",
     "./progress-circle": "./src/progress-circle.tsx",
+    "./select": "./src/select.tsx",
     "./text-area": "./src/text-area.tsx",
     "./text-field": "./src/text-field.tsx",
-    "./utils": "./src/utils/index.ts"
+    "./toast": "./src/toast.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -39,6 +42,7 @@
     "motion": "^12.0.6",
     "react": "^19.0.0",
     "react-aria-components": "^1.6.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "sonner": "^1.7.4"
   }
 }

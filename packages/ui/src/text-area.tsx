@@ -12,9 +12,9 @@ import { tv } from "tailwind-variants";
 import { Description, FieldError, Label } from "./field";
 import { composeTailwindRenderProps, focusStyles } from "./primitive";
 
-const textareaStyles = tv({
+const textAreaStyles = tv({
   extend: focusStyles,
-  base: "field-sizing-content max-h-96 min-h-16 w-full min-w-0 rounded-lg border border-input px-2.5 py-2 text-base shadow-xs outline-hidden transition duration-200 data-disabled:opacity-50 sm:text-sm",
+  base: "field-sizing-content max-h-96 min-h-16 w-full min-w-0 rounded-lg border border-input px-3.5 py-2.5 text-base leading-6 text-fg placeholder-muted-fg shadow-xs outline-hidden transition duration-200 data-disabled:opacity-50 sm:text-sm",
 });
 
 interface TextAreaProps extends TextFieldPrimitiveProps {
@@ -45,7 +45,7 @@ const TextArea = ({
       <TextAreaPrimitive
         placeholder={placeholder}
         className={composeRenderProps(className, (className, renderProps) =>
-          textareaStyles({
+          textAreaStyles({
             ...renderProps,
             className,
           }),

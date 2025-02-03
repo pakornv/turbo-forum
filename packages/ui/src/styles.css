@@ -66,7 +66,7 @@
   :root {
     --bg: var(--color-white);
     /* --fg: var(--color-zinc-950); */
-    --fg: #101828;
+    --fg: #1c1c1c;
 
     --primary: var(--color-blue-600);
     --primary-fg: var(--color-white);
@@ -77,7 +77,8 @@
     --overlay: var(--color-white);
     --overlay-fg: var(--color-zinc-950);
 
-    --accent: var(--color-blue-600);
+    /* --accent: var(--color-blue-600); */
+    --accent: #d8e9e4;
     --accent-fg: var(--color-white);
 
     --muted: var(--color-zinc-100);

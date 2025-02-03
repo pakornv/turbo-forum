@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-import { IconX } from "justd-icons";
 import type { HeadingProps } from "react-aria-components";
 import {
   Button as ButtonPrimitive,
@@ -30,7 +29,7 @@ const dialogStyles = tv({
     footer:
       "isolate mt-auto flex flex-col-reverse justify-end gap-3 px-4 py-7.5 sm:flex-row sm:p-7.5 sm:pt-2.5",
     closeIndicator:
-      "close absolute top-2 right-2 z-50 grid size-8 place-content-center rounded-xl data-focus-visible:ring-1 data-focus-visible:ring-primary data-focused:bg-secondary data-focused:outline-hidden data-hovered:bg-secondary sm:top-4 sm:right-4 sm:size-8 sm:rounded-md",
+      "close absolute top-2 right-2 z-50 grid size-6 place-content-center rounded-xl data-focus-visible:ring-1 data-focus-visible:ring-primary data-focused:bg-secondary data-focused:outline-hidden data-hovered:bg-secondary sm:top-4 sm:right-4 sm:rounded-md",
   },
 });
 
@@ -101,7 +100,7 @@ const titleStyles = tv({
   base: "flex flex-1 items-center text-fg",
   variants: {
     level: {
-      1: "text-2xl font-semibold sm:text-[28px]",
+      1: "text-2xl font-semibold sm:text-2xl/[28px]",
       2: "text-lg font-semibold sm:text-xl",
       3: "text-base font-semibold sm:text-lg",
       4: "text-base font-semibold",
@@ -233,7 +232,22 @@ const DialogCloseIndicator = ({
       slot="close"
       className={closeIndicator({ className })}
     >
-      <IconX className="size-6 text-ui-green-500" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="25"
+        viewBox="0 0 24 25"
+        fill="none"
+        className="size-6 text-ui-green-500"
+      >
+        <path
+          d="M17 7.52441L7 17.5244M7 7.52441L17 17.5244"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
     </ButtonPrimitive>
   ) : null;
 };
