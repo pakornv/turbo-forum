@@ -18,11 +18,10 @@ export class AuthService {
     }
 
     return {
-      access_token: await this.jwtService.signAsync({ sub: user.username }),
+      access_token: await this.jwtService.signAsync({ sub: user.id }),
       id_token: await this.jwtService.signAsync({
-        sub: user.username,
+        sub: user.id,
         name: user.name,
-        email: user.email,
         picture: user.picture,
       }),
     };
