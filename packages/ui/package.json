@@ -7,6 +7,7 @@
     "./styles.css": "./src/styles.css",
     "./utils": "./src/utils/index.ts",
     "./badge": "./src/badge.tsx",
+    "./back-button": "./src/back-button.tsx",
     "./button": "./src/button.tsx",
     "./form": "./src/form.tsx",
     "./link": "./src/link.tsx",

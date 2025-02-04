@@ -20,16 +20,16 @@ const dialogStyles = tv({
       "peer/dialog group/dialog relative flex max-h-[inherit] flex-col overflow-hidden outline-hidden [scrollbar-width:thin] [&::-webkit-scrollbar]:size-0.5",
     ],
     header:
-      "relative flex flex-col gap-0.5 px-4 py-7.5 sm:gap-1 sm:p-7.5 [&[data-slot=dialog-header]:has(+[data-slot=dialog-footer])]:pb-0",
+      "relative flex flex-col gap-0.5 px-4 pt-7.5 sm:gap-1 [&[data-slot=dialog-header]:has(+[data-slot=dialog-footer])]:pb-0",
     description: "text-sm text-muted-fg",
     body: [
-      "isolate flex flex-1 flex-col overflow-auto px-4 sm:px-7.5",
+      "isolate flex flex-1 flex-col overflow-auto px-4 py-7.5 sm:px-7.5",
       "max-h-[calc(var(--visual-viewport-height)-var(--visual-viewport-vertical-padding)-var(--dialog-header-height,0px)-var(--dialog-footer-height,0px))]",
     ],
     footer:
-      "isolate mt-auto flex flex-col-reverse justify-end gap-3 px-4 py-7.5 sm:flex-row sm:p-7.5 sm:pt-2.5",
+      "isolate mt-auto flex flex-col-reverse justify-end gap-3 px-4 pb-7.5 sm:flex-row sm:pt-2.5",
     closeIndicator:
-      "close absolute top-2 right-2 z-50 grid size-6 place-content-center rounded-xl data-focus-visible:ring-1 data-focus-visible:ring-primary data-focused:bg-secondary data-focused:outline-hidden data-hovered:bg-secondary sm:top-4 sm:right-4 sm:rounded-md",
+      "close absolute top-2.5 right-2.5 z-50 grid size-6 place-content-center rounded-xl data-focus-visible:ring-1 data-focus-visible:ring-primary data-focused:bg-secondary data-focused:outline-hidden data-hovered:bg-secondary sm:top-4 sm:right-4 sm:rounded-md",
   },
 });
 
@@ -45,10 +45,6 @@ const Dialog = ({
     <DialogPrimitive role={role} className={root({ className })} {...props} />
   );
 };
-
-const DialogTrigger = (props: React.ComponentProps<typeof ButtonPrimitive>) => (
-  <ButtonPrimitive {...props} />
-);
 
 type DialogHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
   title?: string;
@@ -100,7 +96,7 @@ const titleStyles = tv({
   base: "flex flex-1 items-center text-fg",
   variants: {
     level: {
-      1: "text-2xl font-semibold sm:text-2xl/[28px]",
+      1: "text-2xl font-semibold",
       2: "text-lg font-semibold sm:text-xl",
       3: "text-base font-semibold sm:text-lg",
       4: "text-base font-semibold",

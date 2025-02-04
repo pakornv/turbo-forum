@@ -173,7 +173,7 @@ const NavbarNav = ({
           }}
           isFloat={intent === "floating"}
         >
-          <SheetBody className="bg-ui-green-500 px-2 md:px-4">
+          <SheetBody className="bg-ui-green-500 px-2 py-0 md:px-4">
             {props.children}
           </SheetBody>
         </SheetContent>
