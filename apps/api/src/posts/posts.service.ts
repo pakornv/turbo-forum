@@ -1,7 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { desc, eq } from "drizzle-orm";
+import { count, desc, eq } from "drizzle-orm";
 import { DbService } from "src/db/db.service";
+import { comments } from "src/db/schema/comments";
+import { communities } from "src/db/schema/communities";
 import { posts } from "src/db/schema/posts";
+import { users } from "src/db/schema/users";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { LatestPostDto } from "./dto/latest-post.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
@@ -82,11 +85,23 @@ export class PostsService {
   }
 
   async findAllLatest(authorId?: string): Promise<LatestPostDto[]> {
-    const result = await this.db.query.posts.findMany({
-      with: { author: true, community: true },
-      where: authorId ? eq(posts.authorId, authorId) : undefined,
-      orderBy: [desc(posts.createdAt)],
-    });
+    const result = await this.db
+      .select({
+        id: posts.id,
+        title: posts.title,
+        body: posts.body,
+        createdAt: posts.createdAt,
+        author: users,
+        community: communities,
+        commentCount: count(comments.id),
+      })
+      .from(posts)
+      .innerJoin(users, eq(posts.authorId, users.id))
+      .innerJoin(communities, eq(posts.communityId, communities.id))
+      .leftJoin(comments, eq(posts.id, comments.postId))
+      .where(authorId ? eq(posts.authorId, authorId) : undefined)
+      .groupBy(posts.id)
+      .orderBy(desc(posts.createdAt));
 
     return result.map((result) => ({
       id: result.id,
@@ -102,19 +117,34 @@ export class PostsService {
         name: result.community.name,
       },
       createdAt: result.createdAt,
-      commentCount: 0,
+      commentCount: result.commentCount,
     }));
   }
 
   async findOneLatest(id: string): Promise<LatestPostDto> {
-    const result = await this.db.query.posts.findFirst({
-      with: { author: true, community: true },
-      where: eq(posts.id, id),
-    });
+    const results = await this.db
+      .select({
+        id: posts.id,
+        title: posts.title,
+        body: posts.body,
+        createdAt: posts.createdAt,
+        author: users,
+        community: communities,
+        commentCount: count(comments.id),
+      })
+      .from(posts)
+      .innerJoin(users, eq(posts.authorId, users.id))
+      .innerJoin(communities, eq(posts.communityId, communities.id))
+      .leftJoin(comments, eq(posts.id, comments.postId))
+      .where(eq(posts.id, id))
+      .groupBy(posts.id)
+      .limit(1);
 
-    if (!result) {
+    if (results.length === 0) {
       throw new PostNotFoundError();
     }
+
+    const result = results[0];
 
     return {
       id: result.id,
@@ -130,7 +160,7 @@ export class PostsService {
         name: result.community.name,
       },
       createdAt: result.createdAt,
-      commentCount: 0,
+      commentCount: result.commentCount,
     };
   }
 }

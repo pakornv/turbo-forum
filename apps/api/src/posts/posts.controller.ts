@@ -41,7 +41,7 @@ export class PostsController {
   }
 
   @Get(":id")
-  async finOne(@Param("id") id: string) {
+  async findOneLatest(@Param("id") id: string) {
     try {
       return await this.postsService.findOneLatest(id);
     } catch (error) {
