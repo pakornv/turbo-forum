@@ -7,6 +7,20 @@ import { LatestPostDto } from "./dto/latest-post.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
 import { Post } from "./entities/post.entity";
 
+export class PostNotFoundError extends Error {
+  constructor() {
+    super("Post not found");
+    this.name = "PostNotFoundError";
+  }
+}
+
+export class PostNotAllowedError extends Error {
+  constructor() {
+    super("You are not allowed to perform this action");
+    this.name = "PostNotAllowedError";
+  }
+}
+
 @Injectable()
 export class PostsService {
   private readonly db;
@@ -33,7 +47,7 @@ export class PostsService {
       where: eq(posts.id, id),
     });
     if (!result) {
-      throw new NotFoundError();
+      throw new PostNotFoundError();
     }
 
     const post = {
@@ -51,7 +65,7 @@ export class PostsService {
   async update(id: string, updatePostDto: UpdatePostDto, actorId: string) {
     const post = await this.findOne(id);
 
-    if (post.authorId !== actorId) throw new NotAllowedError();
+    if (post.authorId !== actorId) throw new PostNotAllowedError();
 
     if (updatePostDto.title) post.title = updatePostDto.title;
     if (updatePostDto.body) post.body = updatePostDto.body;
@@ -62,7 +76,7 @@ export class PostsService {
 
   async remove(id: string, actorId: string) {
     const post = await this.findOne(id);
-    if (post.authorId !== actorId) throw new NotAllowedError();
+    if (post.authorId !== actorId) throw new PostNotAllowedError();
 
     await this.db.delete(posts).where(eq(posts.id, id));
   }
@@ -99,7 +113,7 @@ export class PostsService {
     });
 
     if (!result) {
-      throw new NotFoundError();
+      throw new PostNotFoundError();
     }
 
     return {
@@ -118,21 +132,5 @@ export class PostsService {
       createdAt: result.createdAt,
       commentCount: 0,
     };
-  }
-}
-
-export class NotFoundError extends Error {
-  constructor() {
-    super();
-    this.name = "NotFoundError";
-    this.message = "Post not found";
-  }
-}
-
-export class NotAllowedError extends Error {
-  constructor() {
-    super();
-    this.name = "NotAllowedError";
-    this.message = "You are not allowed to perform this action";
   }
 }

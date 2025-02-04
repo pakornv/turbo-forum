@@ -16,25 +16,19 @@ import {
 import { AuthGuard, RequestWithUser } from "src/auth/auth.guard";
 import { CreatePostDto } from "./dto/create-post.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
-import { NotAllowedError, NotFoundError, PostsService } from "./posts.service";
+import {
+  PostNotAllowedError,
+  PostNotFoundError,
+  PostsService,
+} from "./posts.service";
 
-@Controller("posts")
+@Controller()
 export class PostsController {
-  constructor(private postsService: PostsService) {}
+  constructor(private readonly postsService: PostsService) {}
 
   @Get()
-  findAll(@Query("authorId") authorId?: string) {
-    return this.postsService.findAllLatest(authorId);
-  }
-
-  @Get(":id")
-  async finOne(@Param("id") id: string) {
-    try {
-      return await this.postsService.findOneLatest(id);
-    } catch (error) {
-      if (error instanceof NotFoundError) throw new NotFoundException();
-      throw error;
-    }
+  async findAllLatest(@Query("authorId") authorId?: string) {
+    return await this.postsService.findAllLatest(authorId);
   }
 
   @Post()
@@ -43,7 +37,17 @@ export class PostsController {
     @Request() req: RequestWithUser,
     @Body() createPostDto: CreatePostDto,
   ) {
-    await this.postsService.create(createPostDto, req.user.id);
+    return await this.postsService.create(createPostDto, req.user.id);
+  }
+
+  @Get(":id")
+  async finOne(@Param("id") id: string) {
+    try {
+      return await this.postsService.findOneLatest(id);
+    } catch (error) {
+      if (error instanceof PostNotAllowedError) throw new NotFoundException();
+      throw error;
+    }
   }
 
   @Patch(":id")
@@ -54,10 +58,10 @@ export class PostsController {
     @Body() updatePostDto: UpdatePostDto,
   ) {
     try {
-      await this.postsService.update(id, updatePostDto, req.user.id);
+      return await this.postsService.update(id, updatePostDto, req.user.id);
     } catch (error) {
-      if (error instanceof NotFoundError) throw new NotFoundException();
-      if (error instanceof NotAllowedError) throw new ForbiddenException();
+      if (error instanceof PostNotFoundError) throw new NotFoundException();
+      if (error instanceof PostNotAllowedError) throw new ForbiddenException();
       throw error;
     }
   }
@@ -66,10 +70,10 @@ export class PostsController {
   @UseGuards(AuthGuard)
   async remove(@Req() req: RequestWithUser, @Param("id") id: string) {
     try {
-      await this.postsService.remove(id, req.user.id);
+      return await this.postsService.remove(id, req.user.id);
     } catch (error) {
-      if (error instanceof NotFoundError) throw new NotFoundException();
-      if (error instanceof NotAllowedError) throw new ForbiddenException();
+      if (error instanceof PostNotFoundError) throw new NotFoundException();
+      if (error instanceof PostNotAllowedError) throw new ForbiddenException();
       throw error;
     }
   }
