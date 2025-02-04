@@ -1,84 +1,62 @@
-# Turborepo starter
-
-This Turborepo starter is maintained by the Turborepo core team.
-
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
+# Turbo Forum
 
 ## What's inside?
 
-This Turborepo includes the following packages/apps:
+This repo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
+- `api`: a [NestJS](https://nestjs.com/) app
+- `web`: a [Next.js](https://nextjs.org/) app with [Tailwind CSS](https://tailwindcss.com/)
+- `@repo/ui`: a stub React component library with [Tailwind CSS](https://tailwindcss.com/)
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `@repo/typescript-config`: `tsconfig.json` used throughout the monorepo
 
 Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-### Utilities
+## Tech Stack
 
-This Turborepo has some additional tools already setup for you:
+- **Backend Framework**: [NestJS 11](https://nestjs.com/)
+- **Frontend Framework**: [Next.js 15](https://nextjs.org/)
+- **Database**: [SQLite](https://www.sqlite.org/)
+- **ORM**: [Drizzle](https://orm.drizzle.team/)
+- **UI Library**: [React Aria Components](https://react-spectrum.adobe.com/react-aria/index.html/) with [Tailwind CSS v4](https://tailwindcss.com/)
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+## Getting Started
 
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
+```bash
+git clone https://github.com/pakornv/turbo-forum
+cd turbo-forum
+npm install
 ```
 
-### Remote Caching
+## Running Locally
+
+Use the included setup script to create your `.env` file:
+
+```bash
+npm run setup
+```
+
+Then, run the database migrations and seed the database with a default user and team:
+
+```bash
+npm run db:migrate
+npm run db:seed
+```
+
+This will create the following users
+
+- Username: `johndoe`
+- Username: `janedoe`
+
+Finally, run NestJS and Next.js development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
 
 > [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+> You can sign out from current user by enter url [http://localhost:3000/api/auth/signout](http://localhost:3000/api/auth/signout) in your browser
