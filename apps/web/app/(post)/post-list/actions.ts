@@ -8,8 +8,8 @@ import { z } from "zod";
 import { zfd } from "zod-form-data";
 
 const createPostSchema = zfd.formData({
-  title: zfd.text(z.string().min(2)),
-  body: zfd.text(z.string().min(2)),
+  title: zfd.text(z.string()),
+  body: zfd.text(z.string()),
   communityId: zfd.text(z.string()),
 });
 

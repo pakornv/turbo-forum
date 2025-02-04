@@ -93,7 +93,7 @@ export function AppNavbar({ user, items }: AppNavbarProps) {
         </Link>
 
         <div className="ml-auto flex items-center">
-          <NavbarTrigger className="-ml-1" />
+          <NavbarTrigger className="-ml-1 data-hovered:bg-ui-grey-100/10 data-pressed:bg-ui-grey-100/10" />
         </div>
       </NavbarCompact>
     </Navbar>
@@ -101,39 +101,29 @@ export function AppNavbar({ user, items }: AppNavbarProps) {
 }
 
 function CloseButton() {
-  // const isMobile = useMediaQuery("(max-width: 600px)");
-  // const buttonRef = useRef<HTMLButtonElement>(null);
-
-  // useEffect(() => {
-  //   if (isMobile && buttonRef.current) {
-  //     buttonRef.current.focus();
-  //   }
-  // }, [isMobile]);
   return (
-    <ButtonPrimitive
-      // ref={buttonRef}
-      // {...(isMobile ? { autoFocus: true } : {})}
-      aria-label="Close"
-      slot="close"
-      // className={closeIndicator({ className })}\
-    >
-      <div className="mt-8 -ml-2">
-        <svg
-          width="83"
-          height="25"
-          viewBox="0 0 83 25"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M33.1064 12.488L49.1064 12.488M49.1064 12.488L43.1064 6.48804M49.1064 12.488L43.1064 18.488"
-            stroke="#D8E9E4"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </div>
-    </ButtonPrimitive>
+    <div className="relative mt-8 -ml-2">
+      <ButtonPrimitive
+        aria-label="Close"
+        slot="close"
+        className="absolute -top-2.25 left-5.25 size-10 rounded-lg focus-visible:outline-0 data-hovered:bg-ui-grey-100/10 data-pressed:bg-ui-grey-100/10"
+      ></ButtonPrimitive>
+      <svg
+        width="83"
+        height="25"
+        viewBox="0 0 83 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6"
+      >
+        <path
+          d="M33.1064 12.488L49.1064 12.488M49.1064 12.488L43.1064 6.48804M49.1064 12.488L43.1064 18.488"
+          stroke="#D8E9E4"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
   );
 }

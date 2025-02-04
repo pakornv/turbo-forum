@@ -64,7 +64,7 @@ export function DeletePostModal({ id }: DeletePostModalProps) {
             recovered.
           </ModalDescription>
         </ModalHeader>
-        <ModalFooter className="justify-between sm:px-6 sm:pt-8">
+        <ModalFooter className="justify-between pt-6 sm:px-6 sm:pt-8">
           <ModalClose color="secondary" variant="outline" className="w-full">
             Cancel
           </ModalClose>
