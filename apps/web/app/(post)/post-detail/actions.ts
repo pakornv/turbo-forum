@@ -37,8 +37,3 @@ export const createComment = actionClient
 
     revalidatePath("/(post)", "layout");
   });
-
-export async function checkAuth() {
-  const session = await auth();
-  if (!session?.user.accessToken) redirect("/sign-in");
-}

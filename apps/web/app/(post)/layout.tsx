@@ -16,10 +16,8 @@ export default async function Layout({
   return (
     <>
       <AppNavbar user={session?.user} items={items} />
-      {/* <div className="flex flex-1 bg-ui-grey-100"> */}
       <AppSidebar items={items} />
       <main className="flex flex-1 flex-col sm:pl-70">{children}</main>
-      {/* </div> */}
     </>
   );
 }

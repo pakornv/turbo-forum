@@ -1,6 +1,7 @@
 "use client";
 
 import { Avatar } from "@/components/avatar";
+import { requireAuth } from "@/lib/auth/actions";
 import { BackButton } from "@repo/ui/back-button";
 import { Badge } from "@repo/ui/badge";
 import { Button } from "@repo/ui/button";
@@ -8,7 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { postQueries } from "../queries";
-import { checkAuth } from "./actions";
 import { CreateCommentForm } from "./create-comment-form";
 import { CreateCommentModal } from "./create-comment-modal";
 
@@ -92,7 +92,7 @@ export function PostDetail({ id }: PostDetailProps) {
               <Button
                 variant="outline"
                 onPress={async () => {
-                  await checkAuth();
+                  await requireAuth();
                   setIsEditing(true);
                 }}
               >

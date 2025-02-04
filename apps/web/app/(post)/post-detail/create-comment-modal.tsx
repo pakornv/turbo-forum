@@ -1,5 +1,6 @@
 "use client";
 
+import { requireAuth } from "@/lib/auth/actions";
 import { Button } from "@repo/ui/button";
 import { Form } from "@repo/ui/form";
 import {
@@ -39,30 +40,40 @@ export function CreateCommentModal({ postId }: CreateCommentModalProps) {
   }
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Button variant="outline">Add Comments</Button>
-      <ModalContent>
-        <Form onSubmit={handleSubmit}>
-          <ModalHeader className="pb-0">
-            <ModalTitle>Add Comments</ModalTitle>
-          </ModalHeader>
-          <ModalBody>
-            <TextArea
-              name="body"
-              aria-label="body"
-              placeholder="What's on your mind..."
-              className="min-h-[120px] w-full resize-none"
-              isRequired
-            />
-          </ModalBody>
-          <ModalFooter>
-            <ModalClose>Cancel</ModalClose>
-            <Button type="submit" isPending={isPending}>
-              Post
-            </Button>
-          </ModalFooter>
-        </Form>
-      </ModalContent>
-    </Modal>
+    <>
+      <Button
+        variant="outline"
+        onPress={async () => {
+          await requireAuth();
+          setIsOpen(true);
+        }}
+      >
+        Add Comments
+      </Button>
+      <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
+        <ModalContent>
+          <Form onSubmit={handleSubmit}>
+            <ModalHeader className="pb-0">
+              <ModalTitle>Add Comments</ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+              <TextArea
+                name="body"
+                aria-label="body"
+                placeholder="What's on your mind..."
+                className="min-h-[120px] w-full resize-none"
+                isRequired
+              />
+            </ModalBody>
+            <ModalFooter>
+              <ModalClose>Cancel</ModalClose>
+              <Button type="submit" isPending={isPending}>
+                Post
+              </Button>
+            </ModalFooter>
+          </Form>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }

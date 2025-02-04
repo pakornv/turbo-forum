@@ -9,7 +9,7 @@ export default async function Page() {
   if (session?.user) redirect("/posts");
 
   return (
-    <div className="flex-1flex-col flex h-full bg-ui-green-500 lg:flex-row-reverse">
+    <div className="flex h-full flex-1 flex-col bg-ui-green-500 lg:flex-row-reverse">
       <div className="flex max-h-[362px] max-w-full flex-1 flex-col items-center justify-center rounded-b-[36px] bg-ui-green-300 lg:max-h-full lg:max-w-[632px] lg:rounded-tl-[36px] lg:rounded-br-none">
         <Image
           width={0}

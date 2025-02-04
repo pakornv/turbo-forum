@@ -11,12 +11,14 @@ const inter = Inter({
 const ibmPlexSansThai = IBM_Plex_Sans_Thai({
   variable: "--font-ibm-plex-sans-thai",
   weight: ["400", "500", "600"],
+  subsets: ["latin", "thai"],
 });
 
 const castoro = Castoro({
   variable: "--font-castoro",
   weight: ["400"],
   style: ["italic"],
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
