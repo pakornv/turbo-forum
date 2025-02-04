@@ -5,7 +5,7 @@ import { users } from "./users";
 
 export const comments = sqliteTable("comments", {
   autoId: int().primaryKey({ autoIncrement: true }),
-  id: text().notNull(),
+  id: text().notNull().unique(),
   postId: text().notNull(),
   body: text().notNull(),
   authorId: text().notNull(),
