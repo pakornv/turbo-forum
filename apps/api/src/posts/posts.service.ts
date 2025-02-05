@@ -1,14 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { count, desc, eq } from "drizzle-orm";
-import { DbService } from "src/db/db.service";
-import { comments } from "src/db/schema/comments";
-import { communities } from "src/db/schema/communities";
-import { posts } from "src/db/schema/posts";
-import { users } from "src/db/schema/users";
 import { CreatePostDto } from "./dto/create-post.dto";
-import { LatestPostDto } from "./dto/latest-post.dto";
 import { UpdatePostDto } from "./dto/update-post.dto";
 import { Post } from "./entities/post.entity";
+import { PostsRepository } from "./posts.repository";
 
 export class PostNotFoundError extends Error {
   constructor() {
@@ -26,41 +20,23 @@ export class PostNotAllowedError extends Error {
 
 @Injectable()
 export class PostsService {
-  private readonly db;
-
-  constructor(dbService: DbService) {
-    this.db = dbService.db;
-  }
+  constructor(private readonly repo: PostsRepository) {}
 
   async create(createPostDto: CreatePostDto, authorId: string) {
-    await this.db
-      .insert(posts)
-      .values(
-        new Post(
-          createPostDto.title,
-          createPostDto.body,
-          createPostDto.communityId,
-          authorId,
-        ),
-      );
+    const post = new Post(
+      createPostDto.title,
+      createPostDto.body,
+      createPostDto.communityId,
+      authorId,
+    );
+    await this.repo.save(post);
+
+    return post.id;
   }
 
-  async findOne(id: string): Promise<Post> {
-    const result = await this.db.query.posts.findFirst({
-      where: eq(posts.id, id),
-    });
-    if (!result) {
-      throw new PostNotFoundError();
-    }
-
-    const post = {
-      id: result.id,
-      title: result.title,
-      body: result.body,
-      authorId: result.authorId,
-      communityId: result.communityId,
-      createdAt: result.createdAt,
-    };
+  async findOne(id: string) {
+    const post = await this.repo.findOne(id);
+    if (!post) throw new PostNotFoundError();
 
     return post;
   }
@@ -74,93 +50,24 @@ export class PostsService {
     if (updatePostDto.body) post.body = updatePostDto.body;
     if (updatePostDto.communityId) post.communityId = updatePostDto.communityId;
 
-    await this.db.update(posts).set(post).where(eq(posts.id, id));
+    await this.repo.save(post);
   }
 
   async remove(id: string, actorId: string) {
     const post = await this.findOne(id);
     if (post.authorId !== actorId) throw new PostNotAllowedError();
 
-    await this.db.delete(posts).where(eq(posts.id, id));
+    return this.repo.delete(id);
   }
 
-  async findAllLatest(authorId?: string): Promise<LatestPostDto[]> {
-    const result = await this.db
-      .select({
-        id: posts.id,
-        title: posts.title,
-        body: posts.body,
-        createdAt: posts.createdAt,
-        author: users,
-        community: communities,
-        commentCount: count(comments.id),
-      })
-      .from(posts)
-      .innerJoin(users, eq(posts.authorId, users.id))
-      .innerJoin(communities, eq(posts.communityId, communities.id))
-      .leftJoin(comments, eq(posts.id, comments.postId))
-      .where(authorId ? eq(posts.authorId, authorId) : undefined)
-      .groupBy(posts.id)
-      .orderBy(desc(posts.createdAt));
-
-    return result.map((result) => ({
-      id: result.id,
-      title: result.title,
-      body: result.body,
-      author: {
-        id: result.author.id,
-        name: result.author.name,
-        picture: result.author.picture,
-      },
-      community: {
-        id: result.community.id,
-        name: result.community.name,
-      },
-      createdAt: result.createdAt,
-      commentCount: result.commentCount,
-    }));
+  async findAllLatest(authorId?: string) {
+    return this.repo.findAllLatest(authorId);
   }
 
-  async findOneLatest(id: string): Promise<LatestPostDto> {
-    const results = await this.db
-      .select({
-        id: posts.id,
-        title: posts.title,
-        body: posts.body,
-        createdAt: posts.createdAt,
-        author: users,
-        community: communities,
-        commentCount: count(comments.id),
-      })
-      .from(posts)
-      .innerJoin(users, eq(posts.authorId, users.id))
-      .innerJoin(communities, eq(posts.communityId, communities.id))
-      .leftJoin(comments, eq(posts.id, comments.postId))
-      .where(eq(posts.id, id))
-      .groupBy(posts.id)
-      .limit(1);
+  async findOneLatest(id: string) {
+    const post = await this.repo.findOneLatest(id);
+    if (!post) throw new PostNotFoundError();
 
-    if (results.length === 0) {
-      throw new PostNotFoundError();
-    }
-
-    const result = results[0];
-
-    return {
-      id: result.id,
-      title: result.title,
-      body: result.body,
-      author: {
-        id: result.author.id,
-        name: result.author.name,
-        picture: result.author.picture,
-      },
-      community: {
-        id: result.community.id,
-        name: result.community.name,
-      },
-      createdAt: result.createdAt,
-      commentCount: result.commentCount,
-    };
+    return post;
   }
 }

@@ -1,45 +1,33 @@
 import { Injectable } from "@nestjs/common";
-import { desc, eq } from "drizzle-orm";
-import { DbService } from "src/db/db.service";
-import { comments } from "src/db/schema/comments";
-import { posts } from "src/db/schema/posts";
-import { PostsService } from "src/posts/posts.service";
+import { PostsRepository } from "src/posts/posts.repository";
+import { PostNotFoundError } from "src/posts/posts.service";
+import { CommentsRepository } from "./comments.repository";
 import { CreateCommentDto } from "./dto/create-comment.dto";
 import { Comment } from "./entities/comment.entity";
 
 @Injectable()
 export class CommentsService {
-  private readonly db;
-
   constructor(
-    private readonly postsService: PostsService,
-    dbService: DbService,
-  ) {
-    this.db = dbService.db;
-  }
+    private readonly postsRepo: PostsRepository,
+    private readonly commentsRepo: CommentsRepository,
+  ) {}
 
   async create(
     postId: string,
     createCommentDto: CreateCommentDto,
     authorId: string,
   ) {
-    // Ensure the post exists
-    await this.postsService.findOne(postId);
+    if ((await this.postsRepo.findOne(postId)) === null) {
+      throw new PostNotFoundError();
+    }
 
-    // Create the comment
-    await this.db
-      .insert(comments)
-      .values(new Comment(postId, createCommentDto.body, authorId));
+    const comment = new Comment(postId, createCommentDto.body, authorId);
+    await this.commentsRepo.save(comment);
+
+    return comment.id;
   }
 
-  async findAllLatestByPostId(postId: string): Promise<Comment[]> {
-    // Ensure the post exists
-    await this.postsService.findOne(postId);
-
-    return this.db.query.comments.findMany({
-      with: { author: true },
-      where: eq(comments.postId, postId),
-      orderBy: [desc(posts.createdAt)],
-    });
+  async findAllLatestByPostId(postId: string) {
+    return await this.commentsRepo.findAllLatestByPostId(postId);
   }
 }

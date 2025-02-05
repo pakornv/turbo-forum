@@ -3,9 +3,9 @@
         "source.organizeImports": "explicit"
     },
     "editor.formatOnSave": true,
-    "editor.quickSuggestions": {
-        "strings": "on"
-    },
+    // "editor.quickSuggestions": {
+    //     "strings": "on"
+    // },
     "tailwindCSS.experimental.classRegex": [
         [
             "([\"'`][^\"'`]*.*?[\"'`])",

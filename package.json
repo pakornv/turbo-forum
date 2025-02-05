@@ -6,6 +6,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "turbo test",
     "db:seed": "turbo db:seed",
     "db:generate": "turbo db:generate",
     "db:migrate": "turbo db:migrate",

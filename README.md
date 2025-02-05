@@ -60,3 +60,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 
 > [!TIP]
 > You can sign out from current user by enter url [http://localhost:3000/api/auth/signout](http://localhost:3000/api/auth/signout) in your browser
+
+## Run Unit Test
+
+```bash
+npm run test
+```

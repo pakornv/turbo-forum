@@ -45,7 +45,7 @@ export class PostsController {
     try {
       return await this.postsService.findOneLatest(id);
     } catch (error) {
-      if (error instanceof PostNotAllowedError) throw new NotFoundException();
+      if (error instanceof PostNotFoundError) throw new NotFoundException();
       throw error;
     }
   }
